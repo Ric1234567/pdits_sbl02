@@ -2,86 +2,76 @@ package pdits_sbl02;
 
 import java.security.MessageDigest;
 
+/**
+ * Aufgabe 5 "EasyHash" der "Praxis der IT-Sicherheit"-SBL02. Brute-Force
+ * Angriff.
+ */
 public class EasyHash {
 
 	private static final String SERIENNUMMER_HASH = "B349D25C31E475799488E842797FBC36A367A0EBAE7415867DEA0796ED6F2B08";
+	private static final String EMPTY_HEX_SERIENNUMMER = "00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00";
 
 	public static void main(String[] args) {
-		String emptyHex = "00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00";
-		String finalString = "";
+		System.out.println("Start EasyHash!");
 
-		boolean isDone = false;
+		String tempHexSeriennummer = "";
+
+		boolean foundSeriennummer = false;
+
+		// iterate bytes
 		for (int i = 0; i < 16; i++) {
+
+			// iterate 01, 02, ... FF
 			for (int counter = 1; counter < 256; counter++) {
-				// string aufbau:
-				finalString = "";
-				String hex = String.format("%02X", counter);
-				
-				if(hex.equalsIgnoreCase("1A")) {
-					int sdf = 0;
-				}
-				
-				String[] newString = emptyHex.split(":");
-				newString[i] = hex;
+				// reset
+				tempHexSeriennummer = "";
 
+				// string building
+				String hexIterator = String.format("%02X", counter);
+
+				// set in hexIterator at current byte
+				String[] newString = EMPTY_HEX_SERIENNUMMER.split(":");// TODO geht iwie effizienter
+				newString[i] = hexIterator;
+
+				// create seriennummer to test hash
 				for (int j = 0; j < newString.length; j++) {
-					finalString += newString[j];
-					
-					//last :
+					tempHexSeriennummer += newString[j];
+
+					// no ":" at last index
 					if (j != newString.length - 1) {
-						finalString += ":";
+						tempHexSeriennummer += ":";
 					}
 				}
 
-				MessageDigest digest;
+				MessageDigest hasher;
 				try {
-					digest = MessageDigest.getInstance("SHA-256");
-					
-					// Hash
-					byte[] tempHash = digest.digest(finalString.getBytes());
+					hasher = MessageDigest.getInstance("SHA-256");
 
-					String finalHex = "";
-					for (int j = 0; j < tempHash.length; j++) {
-						finalHex += String.format("%02X", tempHash[j]);
+					// hash seriennummer
+					byte[] tempHashSeriennummer = hasher.digest(tempHexSeriennummer.getBytes());
+
+					// create hex representation of hash
+					String tempHexHash = "";
+					for (int j = 0; j < tempHashSeriennummer.length; j++) {
+						tempHexHash += String.format("%02X", tempHashSeriennummer[j]);
 					}
 
-					if (SERIENNUMMER_HASH.equalsIgnoreCase(finalHex)) {
-						System.out.println("stop");
-						isDone = true;
+					// end condition; found the seriennummer
+					if (SERIENNUMMER_HASH.equalsIgnoreCase(tempHexHash)) {
+						// tempHexSeriennummer is correct
+						foundSeriennummer = true;
 						break;
 					}
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
-				//System.out.println("" + i + ", " + counter);
 			}
-			if (isDone) {
+			// end condition
+			if (foundSeriennummer) {
 				break;
 			}
 		}
 		System.out.println("Hash: " + SERIENNUMMER_HASH);
-		System.out.println("Seriennummer: " + finalString);
-
-//		byte[] test = new byte[16];
-//		test[15] = (byte) 0xFF;
-//		try {
-//			MessageDigest digest = MessageDigest.getInstance("SHA-256");
-//
-//			byte[] tempHash = digest.digest(test);
-//			String tempString = new String(tempHash, StandardCharsets.UTF_8);
-//			System.out.println(tempString);
-//
-//			for (byte b : tempHash) {
-//				System.out.print(String.format("%02X", b));
-//			}
-//
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//		}
-	}
-
-	private static int toUnsigned(byte b) {
-		int number = b & 0xFF;
-		return number;
+		System.out.println("Seriennummer: " + tempHexSeriennummer);
 	}
 }

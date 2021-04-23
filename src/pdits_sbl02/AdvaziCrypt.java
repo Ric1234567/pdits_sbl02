@@ -3,7 +3,7 @@ package pdits_sbl02;
 import java.util.Arrays;
 
 /**
- * Aufgabe 2 "Denksport - AdvaziCrypt-Verschlüsselung" der "Praxis der
+ * Aufgabe 2/3 "Denksport - AdvaziCrypt-Verschlüsselung" der "Praxis der
  * IT-Sicherheit"-SBL02.
  */
 public class AdvaziCrypt {

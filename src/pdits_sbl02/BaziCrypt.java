@@ -7,7 +7,7 @@ import java.util.Arrays;
 
 /**
  * Aufgabe 1 "BaziCrypt-Verschlüsselung" der "Praxis der IT-Sicherheit"-SBL02.
- * Enthält auch Teile der Aufgabe 2 "Denksport - AdvaziCrypt-Verschlüsselung"
+ * Enthält auch Teile der Aufgabe 2/3 "Denksport - AdvaziCrypt-Verschlüsselung"
  */
 public class BaziCrypt {
 

@@ -9,38 +9,54 @@ import java.security.MessageDigest;
 import java.util.Scanner;
 import java.util.logging.FileHandler;
 
+/**
+ * Aufgabe 4 "FileHasher" der "Praxis der IT-Sicherheit"-SBL02.
+ */
 public class FileHasher {
-	private static final String PATH1 = "./res/n01.txt.enc";
-
-	private static final String PATH2 = "C:\\Users\\hhage\\Documents\\Uni\\Master\\SS2021\\Praxis der IT-Sec\\SBLs\\SBL2\\Übung 02 - Kryptographie 1.pdf";
+	private static final String FILE_PATH = "./res/n01.txt.enc";// TODO fragen nach pfad der datei?
 
 	public static void main(String[] args) {
-		Scanner scanner = new Scanner(System.in); // Create a Scanner object
-		System.out.println("Enter Algorithm: ");
+		// read in the algorithm the user wants to use
+		Scanner scanner = new Scanner(System.in);
+		System.out.println("Enter Algorithm (SHA-256, SHA-512, MD5): ");
 		String algorithm = scanner.nextLine();
+		scanner.close();
 
 		try {
 			// read cipher file as byte array
-			byte[] file = Files.readAllBytes(Path.of(PATH2));
+			byte[] file = Files.readAllBytes(Path.of(FILE_PATH));
 
-			MessageDigest digest = MessageDigest.getInstance(algorithm);
-			byte[] hash = digest.digest(file);
+			// create instance of hasher of the algorithm
+			MessageDigest hasher = MessageDigest.getInstance(algorithm);
 
-			String hashString = "";
-			System.out.print(algorithm + ": ");
+			// create the hash value of the file
+			byte[] hash = hasher.digest(file);
+
+			String hashHexString = "";
+			System.out.print("Hash of file \"" + FILE_PATH + "\" with " + algorithm + ": ");
+			System.out.println();
+
+			// convert hash to hex string
 			for (int i = 0; i < hash.length; i++) {
-				System.out.print(String.format("%02X", hash[i]));
-				hashString += String.format("%02X", hash[i]);
+				hashHexString += String.format("%02X", hash[i]);
 			}
 
-			BufferedWriter bw = new BufferedWriter(new FileWriter(algorithm + "-Hash.log"));//pfad????????????????????????????????????
-			bw.write(hashString);
+			// print the hash
+			System.out.print(hashHexString);
+			System.out.println();
+
+			String fileName = algorithm + "-Hash.log";
+
+			// write hash to file
+			BufferedWriter bw = new BufferedWriter(new FileWriter(fileName));// TODO fragen nach pfad wo es abgelegt werden soll?
+			bw.write(hashHexString);
 			bw.close();
+
+			// print filename
+			System.out.println(algorithm + "-Hash value written in file \"" + fileName + "\"");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-
-		scanner.close();
 	}
 
 }
