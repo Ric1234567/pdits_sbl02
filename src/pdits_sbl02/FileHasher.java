@@ -13,7 +13,8 @@ import java.util.logging.FileHandler;
  * Aufgabe 4 "FileHasher" der "Praxis der IT-Sicherheit"-SBL02.
  */
 public class FileHasher {
-	private static final String FILE_PATH = "./res/n01.txt.enc";// TODO fragen nach pfad der datei?
+	// path of file to hash
+	private static final String FILE_PATH = "./res/n01.txt.enc";
 
 	public static void main(String[] args) {
 		// read in the algorithm the user wants to use
@@ -48,7 +49,7 @@ public class FileHasher {
 			String fileName = algorithm + "-Hash.log";
 
 			// write hash to file
-			BufferedWriter bw = new BufferedWriter(new FileWriter(fileName));// TODO fragen nach pfad wo es abgelegt werden soll?
+			BufferedWriter bw = new BufferedWriter(new FileWriter(fileName));
 			bw.write(hashHexString);
 			bw.close();
 

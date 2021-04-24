@@ -29,19 +29,11 @@ public class EasyHash {
 				// string building
 				String hexIterator = String.format("%02X", counter);
 
-				// set in hexIterator at current byte
-				String[] newString = EMPTY_HEX_SERIENNUMMER.split(":");// TODO geht iwie effizienter
-				newString[i] = hexIterator;
+				char[] charArrayHexSeriennummer = EMPTY_HEX_SERIENNUMMER.toCharArray();
+				charArrayHexSeriennummer[3 * i] = hexIterator.toCharArray()[0];
+				charArrayHexSeriennummer[3 * i + 1] = hexIterator.toCharArray()[1];
 
-				// create seriennummer to test hash
-				for (int j = 0; j < newString.length; j++) {
-					tempHexSeriennummer += newString[j];
-
-					// no ":" at last index
-					if (j != newString.length - 1) {
-						tempHexSeriennummer += ":";
-					}
-				}
+				tempHexSeriennummer = new String(charArrayHexSeriennummer);
 
 				MessageDigest hasher;
 				try {
