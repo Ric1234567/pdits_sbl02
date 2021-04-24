@@ -19,17 +19,17 @@ public class AdvaziCrypt {
 
 		AdvaziCrypt advaziCrypt = new AdvaziCrypt();
 
-		System.out.println("Crack file at \"" + CIPHER_MESSAGE_PATH_4 + "\":");
+		System.out.println("File: \"" + CIPHER_MESSAGE_PATH_4 + "\":");
 		advaziCrypt.crackAdvazi(CIPHER_MESSAGE_PATH_4);
 		System.out.println();
 		System.out.println();
 
-		System.out.println("Crack file at \"" + CIPHER_MESSAGE_PATH_5 + "\":");
+		System.out.println("File: \"" + CIPHER_MESSAGE_PATH_5 + "\":");
 		advaziCrypt.crackAdvazi(CIPHER_MESSAGE_PATH_5);
 		System.out.println();
 		System.out.println();
 
-		System.out.println("Crack file at \"" + CIPHER_MESSAGE_PATH_6 + "\":");
+		System.out.println("File: \"" + CIPHER_MESSAGE_PATH_6 + "\":");
 		advaziCrypt.crackAdvazi(CIPHER_MESSAGE_PATH_6);
 		System.out.println();
 		System.out.println();
@@ -66,7 +66,8 @@ public class AdvaziCrypt {
 		// decrypt cipher text with key
 		byte[] bPlainText = baziCryptDecrypter.decrypt(bCipherText, bKey);
 
-		// print plain text
+		// print plain text and key
+		System.out.println("Key: " + new String(bKey));
 		System.out.print(new String(bPlainText).substring(0, bCipherText.length - paddingLength));
 	}
 }

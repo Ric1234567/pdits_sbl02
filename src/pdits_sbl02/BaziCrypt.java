@@ -23,17 +23,17 @@ public class BaziCrypt {
 
 		BaziCrypt baziCrypt = new BaziCrypt();
 
-		System.out.println("Crack file at \"" + CIPHER_MESSAGE_PATH_1 + "\":");
+		System.out.println("File: \"" + CIPHER_MESSAGE_PATH_1 + "\":");
 		baziCrypt.crackBaziCrypt(CIPHER_MESSAGE_PATH_1);
 		System.out.println();
 		System.out.println();
 
-		System.out.println("Crack file at \"" + CIPHER_MESSAGE_PATH_2 + "\":");
+		System.out.println("File: \"" + CIPHER_MESSAGE_PATH_2 + "\":");
 		baziCrypt.crackBaziCrypt(CIPHER_MESSAGE_PATH_2);
 		System.out.println();
 		System.out.println();
 
-		System.out.println("Crack file at \"" + CIPHER_MESSAGE_PATH_3 + "\":");
+		System.out.println("File: \"" + CIPHER_MESSAGE_PATH_3 + "\":");
 		baziCrypt.crackBaziCrypt(CIPHER_MESSAGE_PATH_3);
 		System.out.println();
 		System.out.println();
@@ -95,7 +95,8 @@ public class BaziCrypt {
 
 		// the last 10 bytes of the ciphertext are the key
 		byte[] bKey = Arrays.copyOfRange(bCipherText, bCipherText.length - 10, bCipherText.length);
-
+		System.out.println("Key: " + new String(bKey));
+		
 		// find padding length
 		int paddingLength = findPaddingLength(bCipherText, bKey);
 
