@@ -3,8 +3,8 @@ package pdits_sbl02;
 import java.util.Arrays;
 
 /**
- * Aufgabe 2/3 "Denksport - AdvaziCrypt-Verschlüsselung" der "Praxis der
- * IT-Sicherheit"-SBL02.
+ * Aufgabe 2/3 "Denksport - AdvaziCrypt-VerschlÃ¼sselung" der "Praxis der IT-Sicherheit"
+ * SBL02.
  */
 public class AdvaziCrypt {
 
@@ -19,20 +19,14 @@ public class AdvaziCrypt {
 
 		AdvaziCrypt advaziCrypt = new AdvaziCrypt();
 
-		System.out.println("File: \"" + CIPHER_MESSAGE_PATH_4 + "\":");
+		// decrypt file n04.txt.enc
 		advaziCrypt.crackAdvazi(CIPHER_MESSAGE_PATH_4);
-		System.out.println();
-		System.out.println();
 
-		System.out.println("File: \"" + CIPHER_MESSAGE_PATH_5 + "\":");
+		// decrypt file n05.txt.enc
 		advaziCrypt.crackAdvazi(CIPHER_MESSAGE_PATH_5);
-		System.out.println();
-		System.out.println();
 
-		System.out.println("File: \"" + CIPHER_MESSAGE_PATH_6 + "\":");
+		// decrypt file n06.txt.enc
 		advaziCrypt.crackAdvazi(CIPHER_MESSAGE_PATH_6);
-		System.out.println();
-		System.out.println();
 	}
 
 	/**
@@ -48,11 +42,13 @@ public class AdvaziCrypt {
 	/**
 	 * Cracks the AdvaziCrypt encryption.
 	 */
-	private void crackAdvazi(String cipherMessageFilePath) {
+	private void crackAdvazi(String cipherFilePath) {
+		System.out.println("Start to decryt File: \"" + cipherFilePath + "\":");
+
 		// use same methods like BaziCrypt
 		BaziCrypt baziCryptDecrypter = new BaziCrypt();
 
-		byte[] bCipherText = baziCryptDecrypter.readCipherMessageFromFile(cipherMessageFilePath);
+		byte[] bCipherText = baziCryptDecrypter.readCipherMessageFromFile(cipherFilePath);
 
 		// the last 10 bytes of the ciphertext are the key
 		byte[] bKey = Arrays.copyOfRange(bCipherText, bCipherText.length - 10, bCipherText.length);
@@ -66,8 +62,11 @@ public class AdvaziCrypt {
 		// decrypt cipher text with key
 		byte[] bPlainText = baziCryptDecrypter.decrypt(bCipherText, bKey);
 
-		// print plain text and key
-		System.out.println("Key: " + new String(bKey));
-		System.out.print(new String(bPlainText).substring(0, bCipherText.length - paddingLength));
+		// print results
+		System.out.println("Key (char): " + new String(bKey));
+		System.out.println("Padding length: " + paddingLength);
+		System.out.println("Decrypted message: \n" + new String(bPlainText).substring(0, bCipherText.length - paddingLength));
+		System.out.println();
+		System.out.println();
 	}
 }
