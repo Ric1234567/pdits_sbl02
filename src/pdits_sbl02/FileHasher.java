@@ -13,11 +13,14 @@ import java.util.Scanner;
  */
 
 public class FileHasher {
+
 	// path of file to hash
 	private static final String FILE_PATH = "./res/n01.txt.enc";
 
-	// Get the algorithm the user wants to use (SHA-256, SHA-512, MD5)
-	private static String getAlgorithm(){
+	/**
+	 * Get the algorithm the user wants to use (SHA-256, SHA-512, MD5)
+	 */
+	private String readInAlgorithm(){
 		Scanner scanner = new Scanner(System.in);
 		System.out.println("Enter Algorithm (SHA-256, SHA-512, MD5): ");
 		String algorithm = scanner.nextLine();
@@ -25,8 +28,10 @@ public class FileHasher {
 		return algorithm;
 	}
 
-	// convert byte array hash to hexadecimal string
-	private static String toHexString(byte[] hash){
+	/**
+	 * convert byte array hash to hexadecimal string
+	 */
+	private String toHexString(byte[] hash){
 		String hashHexString = "";
 
 		for (int i = 0; i < hash.length; i++) {
@@ -35,8 +40,10 @@ public class FileHasher {
 		return hashHexString;
 	}
 
-	// write hash value to file
-	private static void writeHashToFile(String hash, String algorithm){
+	/**
+	 * write hash value to file
+	 */
+	private void writeHashToFile(String hash, String algorithm){
 		String fileName = algorithm + "-Hash.log";
 		BufferedWriter bw = null;
 
@@ -52,27 +59,26 @@ public class FileHasher {
 	}
 
 	public static void main(String[] args) {
-
+		FileHasher fileHasher = new FileHasher();
 		try {
 			String hashHexString = "";
-			String algorithm = getAlgorithm();
+			String algorithm = fileHasher.readInAlgorithm();
 
 			// create instance of hasher of the algorithm
 			MessageDigest hasher = MessageDigest.getInstance(algorithm);
 
 			// read file as byte array and generate the hash value of the file
 			byte[] hash = hasher.digest(Files.readAllBytes(Path.of(FILE_PATH)));
-			hashHexString = toHexString(hash);
+			hashHexString = fileHasher.toHexString(hash);
 
 			System.out.println("Hash of file \"" + FILE_PATH + "\" with " + algorithm + ": ");
 			System.out.println(hashHexString);
 
 			// write hash value to file
-			writeHashToFile(hashHexString, algorithm);
+			fileHasher.writeHashToFile(hashHexString, algorithm);
 
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
-
 }
