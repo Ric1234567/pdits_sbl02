@@ -6,8 +6,8 @@ import java.nio.file.Path;
 import java.util.Arrays;
 
 /**
- * Aufgabe 1 "BaziCrypt-Verschlüsselung" der "Praxis der IT-Sicherheit"-SBL02.
- * Enthält auch Teile der Aufgabe 2/3 "Denksport - AdvaziCrypt-Verschlüsselung"
+ * Aufgabe 1 "BaziCrypt-VerschlÃ¼sselung" der "Praxis der IT-Sicherheit"-SBL02.
+ * EnthÃ¤lt auch Teile der Aufgabe 2/3 "Denksport - AdvaziCrypt-VerschlÃ¼sselung"
  */
 public class BaziCrypt {
 
@@ -15,29 +15,6 @@ public class BaziCrypt {
 	private static final String CIPHER_MESSAGE_PATH_1 = "./res/n01.txt.enc";
 	private static final String CIPHER_MESSAGE_PATH_2 = "./res/n02.txt.enc";
 	private static final String CIPHER_MESSAGE_PATH_3 = "./res/n03.txt.enc";
-
-	public static void main(String[] args) {
-		// BaziCrypt
-		System.out.println("Started to crack BaziCrypt!");
-		System.out.println();
-
-		BaziCrypt baziCrypt = new BaziCrypt();
-
-		System.out.println("File: \"" + CIPHER_MESSAGE_PATH_1 + "\":");
-		baziCrypt.crackBaziCrypt(CIPHER_MESSAGE_PATH_1);
-		System.out.println();
-		System.out.println();
-
-		System.out.println("File: \"" + CIPHER_MESSAGE_PATH_2 + "\":");
-		baziCrypt.crackBaziCrypt(CIPHER_MESSAGE_PATH_2);
-		System.out.println();
-		System.out.println();
-
-		System.out.println("File: \"" + CIPHER_MESSAGE_PATH_3 + "\":");
-		baziCrypt.crackBaziCrypt(CIPHER_MESSAGE_PATH_3);
-		System.out.println();
-		System.out.println();
-	}
 
 	/**
 	 * Reads a given file from a path as an byte array.
@@ -82,7 +59,6 @@ public class BaziCrypt {
 				return (byte) (bCipherText.length - i - 1);
 			}
 		}
-
 		// no padding found
 		return 0;
 	}
@@ -91,19 +67,41 @@ public class BaziCrypt {
 	 * Cracks the BaziCrypt encryption.
 	 */
 	private void crackBaziCrypt(String cipherFilePath) {
+		System.out.println("Start to decryt File: \"" + cipherFilePath + "\":");
+
 		byte[] bCipherText = this.readCipherMessageFromFile(cipherFilePath);
 
 		// the last 10 bytes of the ciphertext are the key
 		byte[] bKey = Arrays.copyOfRange(bCipherText, bCipherText.length - 10, bCipherText.length);
-		System.out.println("Key: " + new String(bKey));
-		
+
 		// find padding length
 		int paddingLength = findPaddingLength(bCipherText, bKey);
 
 		// decrypt ciphertext with key
 		byte[] bPlainText = this.decrypt(bCipherText, bKey);
 
-		// print plain text with removed padding
-		System.out.print(new String(bPlainText).substring(0, bCipherText.length - paddingLength));
+		// print results
+		System.out.println("Key (char): " + new String(bKey));
+		System.out.println("Padding length: " + paddingLength);
+		System.out.println("Decrypted message: \n" + new String(bPlainText).substring(0, bCipherText.length - paddingLength));
+		System.out.println();
+		System.out.println();
+	}
+
+	public static void main(String[] args) {
+		// BaziCrypt
+		System.out.println("Started to crack BaziCrypt!");
+		System.out.println();
+
+		BaziCrypt baziCrypt = new BaziCrypt();
+
+		// decrypt file n01.txt.enc
+		baziCrypt.crackBaziCrypt(CIPHER_MESSAGE_PATH_1);
+
+		// decrypt file n02.txt.enc
+		baziCrypt.crackBaziCrypt(CIPHER_MESSAGE_PATH_2);
+
+		// decrypt file n03.txt.enc
+		baziCrypt.crackBaziCrypt(CIPHER_MESSAGE_PATH_3);
 	}
 }
