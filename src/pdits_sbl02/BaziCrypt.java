@@ -67,7 +67,7 @@ public class BaziCrypt {
 	 * Cracks the BaziCrypt encryption.
 	 */
 	private void crackBaziCrypt(String cipherFilePath) {
-		System.out.println("Start to decryt File: \"" + cipherFilePath + "\":");
+		System.out.println("Start to decrypt File: \"" + cipherFilePath + "\":");
 
 		byte[] bCipherText = this.readCipherMessageFromFile(cipherFilePath);
 
@@ -90,8 +90,8 @@ public class BaziCrypt {
 
 	public static void main(String[] args) {
 		// BaziCrypt
-		System.out.println("Started to crack BaziCrypt!");
-		System.out.println();
+		System.out.println("BaziCrypt started!");
+
 
 		BaziCrypt baziCrypt = new BaziCrypt();
 

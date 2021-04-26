@@ -52,7 +52,7 @@ public class FileHasher {
 			bw.write(hash);
 			bw.close();
 			// print filename
-			System.out.println(algorithm + "-Hash value written in file \"" + fileName + "\"");
+			System.out.println(algorithm + "-Hash value written in file \"./" + fileName + "\"");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

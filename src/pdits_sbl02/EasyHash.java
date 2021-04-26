@@ -45,16 +45,16 @@ public class EasyHash {
 		return hashString;
 	}
 
-
 	public static void main(String[] args) {
 
 		System.out.println("Start EasyHash! ");
 		String tempSeriennummer = "";
 		String tempHash = "";
-		boolean foundSeriennummer = false;
+		int i = 0;
+		boolean matchingNumber = false;
 
 		// iterate through bytes
-		for (int i = 0; i < 16; i++) {
+		while(!matchingNumber && i < 16) {
 
 			// iterate through Hex values (01, 02, ... FF)
 			for (int counter = 1; counter < 256; counter++) {
@@ -67,17 +67,14 @@ public class EasyHash {
 
 				// check, if current hash matches the given hash
 				if (SERIENNUMMER_HASH.equalsIgnoreCase(tempHash)) {
-					foundSeriennummer = true;
+					matchingNumber = true;
 					System.out.println("We found the matching Seriennummer!");
 					System.out.println("Hash: " + SERIENNUMMER_HASH);
 					System.out.println("Seriennummer: " + tempSeriennummer);
 					break;
 				}
 			}
-			// end loop
-			if (foundSeriennummer) {
-				break;
-			}
+			i++;
 		}
 	}
 }

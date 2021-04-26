@@ -43,7 +43,7 @@ public class AdvaziCrypt {
 	 * Cracks the AdvaziCrypt encryption.
 	 */
 	private void crackAdvazi(String cipherFilePath) {
-		System.out.println("Start to decryt File: \"" + cipherFilePath + "\":");
+		System.out.println("Start to decrypt File: \"" + cipherFilePath + "\":");
 
 		// use same methods like BaziCrypt
 		BaziCrypt baziCryptDecrypter = new BaziCrypt();
